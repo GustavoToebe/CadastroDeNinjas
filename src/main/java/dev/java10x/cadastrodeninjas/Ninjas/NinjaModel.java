@@ -16,6 +16,7 @@ public class NinjaModel {
     private Integer id;
     private String nome;
     private Integer idade;
+    @Column(unique = true)
     private String email;
 
     //Um ninja tem muitas missoes

@@ -17,15 +17,18 @@ public class NinjaModel {
     private Integer idade;
     private String email;
 
-    private List<MissoesModel> missoes;
+    //Um ninja tem muitas missoes
+    @ManyToOne
+    @JoinColumn(name = "missoes_id")
+    private MissoesModel missoes;
 
     public NinjaModel() {
     }
 
-    public NinjaModel(Integer id, String nome, Integer idade) {
-        this.id = id;
+    public NinjaModel(String nome, Integer idade, String email) {
         this.nome = nome;
         this.idade = idade;
+        this.email = email;
     }
 
     public String getEmail() {

@@ -3,6 +3,8 @@ package dev.java10x.cadastrodeninjas.Missoes;
 import dev.java10x.cadastrodeninjas.Ninjas.NinjaModel;
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "tb_missoes")
 public class MissoesModel {
@@ -15,27 +17,9 @@ public class MissoesModel {
     private String dificuldade;
     private Boolean status;
 
-    @ManyToOne
-    @JoinColumn(name = "ninja_id")
-    private NinjaModel ninja;
-
-    public NinjaModel getNinja() {
-        return ninja;
-    }
-
-    public void setNinja(NinjaModel ninja) {
-        this.ninja = ninja;
-    }
-
-    public MissoesModel() {
-    }
-
-    public MissoesModel(String nome, String descricao, String dificuldade, Boolean status) {
-        this.nome = nome;
-        this.descricao = descricao;
-        this.dificuldade = dificuldade;
-        this.status = status;
-    }
+    //Uma missao tem muitos ninjas
+    @OneToMany(mappedBy = "missoes")
+    private List<NinjaModel> ninja;
 
     public Integer getId() {
         return id;

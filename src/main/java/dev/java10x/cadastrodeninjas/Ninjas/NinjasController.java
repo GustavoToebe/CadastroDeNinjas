@@ -10,9 +10,11 @@ import java.util.List;
 public class NinjasController {
 
     private NinjaService ninjaService;
+    private NinjaMapper ninjaMapper;
 
-    public NinjasController(NinjaService ninjaService) {
+    public NinjasController(NinjaService ninjaService, NinjaMapper ninjaMapper) {
         this.ninjaService = ninjaService;
+        this.ninjaMapper = ninjaMapper;
     }
 
     @GetMapping("/boasvindasninja")
@@ -21,8 +23,8 @@ public class NinjasController {
     }
 
     @PostMapping("/criarninja")
-    public NinjaModel criarNinja(@RequestBody NinjaModel ninja) {
-        return ninjaService.addNinja(ninja);
+    public NinjaDTO criarNinja(@RequestBody NinjaDTO NinjaDTO) {
+        return ninjaService.addNinja(NinjaDTO);
     }
 
     @GetMapping("/listarninjas")
@@ -35,14 +37,14 @@ public class NinjasController {
         return ninjaService.getNinjaById(id);
     }
 
-    @PutMapping("/alteraID")
-    public String atualizarNinjasById() {
-        return "Atualizado com sucesso";
+    @PutMapping("/atualizarNinjabyid/{id}")
+    public NinjaModel atualizarNinjasById(@PathVariable Integer id, @RequestBody NinjaModel ninja) {
+        return ninjaService.updateNinja(id, ninja);
     }
 
-    @DeleteMapping("/exxluirID")
-    public String excluirNinjas() {
+    @DeleteMapping("/excluirNinjaById/{id}")
+    public String excluirNinjasById(@PathVariable Integer id) {
+        ninjaService.deleteNinja(id);
         return "Excluido com sucesso";
     }
-
 }

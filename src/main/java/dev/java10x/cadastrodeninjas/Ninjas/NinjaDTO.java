@@ -1,28 +1,21 @@
 package dev.java10x.cadastrodeninjas.Ninjas;
 
 import dev.java10x.cadastrodeninjas.Missoes.MissoesModel;
-import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-@Entity
-@Table(name = "tb_ninjas")
+
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
-public class NinjaModel {
+public class NinjaDTO {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String nome;
     private Integer idade;
-    @Column(unique = true)
     private String email;
     private Integer rank;
 
-    //Um ninja tem muitas missoes
-    @ManyToOne
-    @JoinColumn(name = "missoes_id")
     private MissoesModel missoes;
-
 }

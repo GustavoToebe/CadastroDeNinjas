@@ -9,13 +9,17 @@ import java.util.Optional;
 public class NinjaService {
 
     private NinjaRepository ninjaRepository;
+    private NinjaMapper ninjaMapper;
 
-    public NinjaService(NinjaRepository ninjaRepository) {
+    public NinjaService(NinjaRepository ninjaRepository, NinjaMapper ninjaMapper) {
         this.ninjaRepository = ninjaRepository;
+        this.ninjaMapper = ninjaMapper;
     }
 
-    public NinjaModel addNinja(NinjaModel ninja) {
-        return ninjaRepository.save(ninja);
+    public NinjaDTO addNinja(NinjaDTO ninjaDTO) {
+        NinjaModel ninjaModel = new NinjaMapper().map(ninjaDTO);
+        ninjaModel = ninjaRepository.save(ninjaModel);
+        return ninjaMapper.map(ninjaModel);
     }
 
     public NinjaModel getNinjaById(Integer id) {
@@ -23,7 +27,17 @@ public class NinjaService {
         return ninja.orElse(null);
     }
 
+    public void deleteNinja(Integer id) {
+        ninjaRepository.deleteById(id);
+    }
+
     public List<NinjaModel> listarNinjas() {
         return ninjaRepository.findAll();
+    }
+
+    public NinjaModel updateNinja(Integer id , NinjaModel ninjaAtualizado) {
+        Optional<NinjaModel> ninjaBanco = ninjaRepository.findById(id);
+        ninjaAtualizado.setId(id);
+        return ninjaRepository.save(ninjaAtualizado);
     }
 }
